@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.baiiu.krtvdemo.FullVideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:id="@+id/container_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_50"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingEnd="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingStart="15dp"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            tools:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈" />
+
+        <ImageButton
+            android:id="@+id/ibt_close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/news_krtv_close" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/black_50"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_time_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            tools:text="00:34" />
+
+        <SeekBar
+            android:id="@+id/seekbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dip"
+            android:layout_height="32dip"
+            android:layout_weight="1"
+            android:max="1000" />
+
+        <TextView
+            android:id="@+id/tv_time_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="12.5dp"
+            android:paddingRight="12.5dp"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            tools:text="03:23" />
+
+        <ImageButton
+            android:id="@+id/ibt_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:paddingLeft="12.5dp"
+            android:paddingRight="12.5dp"
+            android:src="@drawable/news_krtv_share" />
+
+        <ImageButton
+            android:id="@+id/ibt_shrink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:paddingLeft="12.5dp"
+            android:paddingRight="12.5dp"
+            android:src="@drawable/news_krtv_shrinkscreen" />
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/progressBar_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        tools:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+
+    <ImageButton
+        android:id="@+id/ibt_pause_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/black_50"
+        android:padding="10dp"
+        android:src="@drawable/level_pause_play" />
+
+</merge>
