@@ -64,7 +64,7 @@
             android:paddingLeft="15dp"
             android:paddingStart="15dp"
             android:textColor="@android:color/white"
-            android:textSize="11sp"
+            android:textSize="12sp"
             tools:text="00:34" />
 
         <SeekBar
@@ -82,22 +82,13 @@
             android:paddingEnd="12.5dp"
             android:paddingRight="12.5dp"
             android:textColor="@android:color/white"
-            android:textSize="11sp"
+            android:textSize="12sp"
             tools:text="03:23" />
-
-        <ImageButton
-            android:id="@+id/ibt_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:paddingLeft="12.5dp"
-            android:paddingRight="12.5dp"
-            android:src="@drawable/news_krtv_share" />
 
         <ImageButton
             android:id="@+id/ibt_shrink"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@null"
             android:paddingLeft="12.5dp"
             android:paddingRight="12.5dp"

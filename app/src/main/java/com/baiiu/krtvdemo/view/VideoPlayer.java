@@ -42,7 +42,6 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
     private TextView tv_time_current;
     private SeekBar mProgress;
     private TextView tv_time_total;
-    private ImageButton ibt_share;
     private ImageButton ibt_shrink;
     private ImageButton ibt_pause_play;
     private ProgressBar progressBar;
@@ -106,7 +105,6 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
         tv_time_current = (TextView) findViewById(R.id.tv_time_current);
         mProgress = (SeekBar) findViewById(R.id.seekbar);
         tv_time_total = (TextView) findViewById(R.id.tv_time_total);
-        ibt_share = (ImageButton) findViewById(R.id.ibt_share);
         ibt_shrink = (ImageButton) findViewById(R.id.ibt_shrink);
 
         ibt_pause_play = (ImageButton) findViewById(R.id.ibt_pause_play);
@@ -378,10 +376,7 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 //        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//
 //        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && isMini) {
-//            mHandler.removeMessages(FADE_OUT);
-//            dismiss();
 //        }
     }
 

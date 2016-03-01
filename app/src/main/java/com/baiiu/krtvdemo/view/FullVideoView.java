@@ -25,8 +25,14 @@ public class FullVideoView extends VideoView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        //Log.i("@@@@", "onMeasure(" + MeasureSpec.toString(widthMeasureSpec) + ", "
-        //        + MeasureSpec.toString(heightMeasureSpec) + ")");
+
+        /*
+        这段代码为经测试,不能确保使该videoView按最大的尺寸播放.尽量全部写为MeasureSpec.EXACTLY的
+         */
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        int measuredWidth = getMeasuredWidth();//经过super按比例缩放的
+        int measuredHeight = getMeasuredHeight();//经过super按比例缩放的
 
 
         int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -37,17 +43,18 @@ public class FullVideoView extends VideoView {
         int width = widthSpecSize;
         int height = heightSpecSize;
 
-
         if (widthSpecMode == MeasureSpec.EXACTLY && heightSpecMode == MeasureSpec.EXACTLY) {
-            setMeasuredDimension(width, height);
+            setMeasuredDimension(width, height);//扩展为全屏
         } else if (widthSpecMode == MeasureSpec.EXACTLY) {
-
+            width = Math.max(widthMeasureSpec, measuredWidth);
+            height = measuredHeight;
         } else if (heightSpecMode == MeasureSpec.EXACTLY) {
-
+            width = measuredWidth;
+            height = Math.max(heightMeasureSpec, measuredHeight);
         } else {
-
+            width = measuredWidth;
+            height = measuredHeight;
         }
-
 
         setMeasuredDimension(width, height);
     }
