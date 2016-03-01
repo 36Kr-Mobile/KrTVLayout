@@ -42,6 +42,7 @@ public class YoutubeLayout extends ViewGroup {
 
     @Override
     protected void onFinishInflate() {
+		super.onFinishInflate();
         mHeaderView = findViewById(R.id.header);
         mDescView = findViewById(R.id.desc);
     }

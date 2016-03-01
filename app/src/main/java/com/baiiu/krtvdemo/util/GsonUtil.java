@@ -1,7 +1,6 @@
 package com.baiiu.krtvdemo.util;
 
 
-import com.baiiu.krtvdemo.LogUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

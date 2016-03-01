@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MediaControllerLayout">
+        <attr name="playerMiniWidth" format="dimension|reference" />
+        <attr name="playerMiniHeight" format="dimension|reference" />
+        <attr name="playerMaxHeight" format="dimension|reference" />
+    </declare-styleable>
+</resources>

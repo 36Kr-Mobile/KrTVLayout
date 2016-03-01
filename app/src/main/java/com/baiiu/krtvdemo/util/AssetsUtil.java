@@ -1,4 +1,4 @@
-package com.baiiu.krtvdemo;
+package com.baiiu.krtvdemo.util;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.baiiu.krtvdemo;
+package com.baiiu.krtvdemo.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import com.baiiu.krtvdemo.R;
 
 import java.util.Formatter;
 import java.util.Locale;
@@ -57,6 +59,15 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
 
     private Uri currentUri;
 
+    public IViewPlayerCallBack mViewPlayerCallBack;
+
+    public interface IViewPlayerCallBack {
+        void onClose();
+    }
+
+    public void setViewPlayerCallBack(IViewPlayerCallBack viewPlayerCallBack) {
+        this.mViewPlayerCallBack = viewPlayerCallBack;
+    }
 
     public VideoPlayer(Context context) {
         this(context, null);
@@ -168,6 +179,9 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
         switch (v.getId()) {
             case R.id.ibt_close:
                 close();
+                if (mViewPlayerCallBack != null) {
+                    mViewPlayerCallBack.onClose();
+                }
                 break;
             case R.id.ibt_shrink:
                 Context context = getContext();
@@ -266,6 +280,7 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
     public boolean onTouchEvent(MotionEvent event) {
         if (isReleased) {
             return super.onTouchEvent(event);
+//            return true;
         }
         //在手指按下时即显示
         switch (event.getAction()) {
@@ -288,6 +303,7 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
         }
 
         return super.onTouchEvent(event);
+//        return true;
     }
 
     //展出,展出动画

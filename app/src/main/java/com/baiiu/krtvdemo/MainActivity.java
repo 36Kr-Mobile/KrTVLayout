@@ -11,7 +11,10 @@ import android.view.View;
 
 import com.baiiu.krtvdemo.pojo.KrTV;
 import com.baiiu.krtvdemo.pojo.TV;
+import com.baiiu.krtvdemo.util.AssetsUtil;
 import com.baiiu.krtvdemo.util.GsonUtil;
+import com.baiiu.krtvdemo.view.MediaControllerLayout;
+import com.baiiu.krtvdemo.view.VideoPlayer;
 
 import java.util.List;
 
@@ -36,6 +39,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mediaControllerLayout = (MediaControllerLayout) findViewById(R.id.mediaControllerLayout);
         mediaControllerLayout.setVisibility(View.INVISIBLE);
+        mediaControllerLayout.setViewPlayerCallBack(new VideoPlayer.IViewPlayerCallBack() {
+            @Override
+            public void onClose() {
+                mediaControllerLayout.setVisibility(View.INVISIBLE);
+            }
+        });
 
         String s = AssetsUtil.readAssets(this, "example.json");
 

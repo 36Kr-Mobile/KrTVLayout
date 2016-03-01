@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myapp="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,16 +14,19 @@
         android:layout_height="match_parent" />
 
 
-    <com.baiiu.krtvdemo.MediaControllerLayout
+    <com.baiiu.krtvdemo.view.MediaControllerLayout
         android:id="@+id/mediaControllerLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        myapp:playerMaxHeight="200dp"
+        myapp:playerMiniWidth="300dp"
+        myapp:playerMiniHeight="150dp">
 
-        <com.baiiu.krtvdemo.VideoPlayer
+        <com.baiiu.krtvdemo.view.VideoPlayer
             android:id="@+id/videoPlayer"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
 
-    </com.baiiu.krtvdemo.MediaControllerLayout>
+    </com.baiiu.krtvdemo.view.MediaControllerLayout>
 
 </FrameLayout>

@@ -1,6 +1,8 @@
-package com.baiiu.krtvdemo;
+package com.baiiu.krtvdemo.util;
 
 import android.util.Log;
+
+import com.baiiu.krtvdemo.BuildConfig;
 
 
 /**
