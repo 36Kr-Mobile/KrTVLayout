@@ -6,16 +6,12 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.baiiu.krtvdemo.R;
-import com.baiiu.krtvdemo.util.LogUtil;
 
 /**
  * author: baiiu
@@ -23,8 +19,6 @@ import com.baiiu.krtvdemo.util.LogUtil;
  * description:
  */
 public class MediaControllerLayout extends FrameLayout {
-
-    private ViewDragHelper mDragHelper;
 
     private VideoPlayer videoPlayer;
     private FrameLayout.LayoutParams videoPlayerLayoutParams;
@@ -64,9 +58,6 @@ public class MediaControllerLayout extends FrameLayout {
             typedArray.recycle();
         }
 
-        mDragHelper = ViewDragHelper.create(this, callback);
-        mDragHelper.cancel();
-
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -80,8 +71,6 @@ public class MediaControllerLayout extends FrameLayout {
                 int measuredHeight = getMeasuredHeight();
                 topMargin = measuredHeight - playerMiniHeight;
                 leftMargin = measuredWidth - playerMiniWidth;
-
-                LogUtil.d(topMargin + ", " + leftMargin);
             }
         });
     }
@@ -190,58 +179,5 @@ public class MediaControllerLayout extends FrameLayout {
             videoPlayerLayoutParams = new FrameLayout.LayoutParams(-1, playerMaxiHeight);
         }
     }
-
-
-    private ViewDragHelper.Callback callback = new ViewDragHelper.Callback() {
-        private int mOriginalLeft;
-
-        @Override
-        public boolean tryCaptureView(View child, int pointerId) {
-            return isMinimum && child == videoPlayer;
-        }
-
-        @Override
-        public void onViewCaptured(View capturedChild, int activePointerId) {
-            isDragging = true;
-            mOriginalLeft = capturedChild.getLeft();
-        }
-
-        @Override
-        public int clampViewPositionHorizontal(View child, int left, int dx) {
-            return left;
-        }
-
-        @Override
-        public void onViewReleased(View releasedChild, float xvel, float yvel) {
-            isDragging = false;
-        }
-
-
-        @Override
-        public void onViewDragStateChanged(int state) {
-        }
-
-
-        @Override
-        public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
-        }
-    };
-
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-        return mDragHelper.shouldInterceptTouchEvent(event);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        mDragHelper.processTouchEvent(event);
-
-        int x = (int) event.getX();
-        int y = (int) event.getY();
-
-        return isMinimum && mDragHelper.isViewUnder(videoPlayer, x, y) || super.onTouchEvent(event);
-    }
-
 
 }

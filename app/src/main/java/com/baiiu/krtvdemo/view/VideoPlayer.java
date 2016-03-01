@@ -279,8 +279,7 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (isReleased) {
-            return super.onTouchEvent(event);
-//            return true;
+            return true;
         }
         //在手指按下时即显示
         switch (event.getAction()) {
@@ -303,7 +302,6 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
         }
 
         return super.onTouchEvent(event);
-//        return true;
     }
 
     //展出,展出动画
