@@ -324,7 +324,6 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
         container_top.setVisibility(VISIBLE);
         container_bottom.setVisibility(VISIBLE);
         ibt_pause_play.setVisibility(VISIBLE);
-
         mHandler.sendEmptyMessage(SHOW_PROGRESS);
     }
 
@@ -366,6 +365,7 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
         progressBar_container.setVisibility(VISIBLE);
         progressBar.setVisibility(VISIBLE);
         ibt_pause_play.setVisibility(INVISIBLE);
+        ibt_pause_play.setImageLevel(0);
         videoView.setVideoURI(uri);
         isReleased = true;
         videoView.start();
@@ -387,11 +387,14 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
             }
             videoView.stopPlayback();
             progressBar_container.setVisibility(VISIBLE);
-            progressBar.setVisibility(INVISIBLE);
-            ibt_pause_play.setVisibility(View.VISIBLE);
-            ibt_pause_play.setImageLevel(1);
+            mProgress.setProgress(0);
+            mProgress.setSecondaryProgress(0);
+            currentUri = null;
+            tv_time_total.setText("00:00");
+            tv_time_current.setText("00:00");
             mHandler.removeMessages(FADE_OUT);
             isReleased = true;
+
         }
     }
 

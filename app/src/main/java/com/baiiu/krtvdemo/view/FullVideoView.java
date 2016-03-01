@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.VideoView;
 
+import com.baiiu.krtvdemo.util.LogUtil;
+
 /**
  * author: baiiu
  * date: on 16/2/25 15:52
@@ -40,11 +42,12 @@ public class FullVideoView extends VideoView {
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
 
-        int width = widthSpecSize;
-        int height = heightSpecSize;
+        int width;
+        int height;
 
         if (widthSpecMode == MeasureSpec.EXACTLY && heightSpecMode == MeasureSpec.EXACTLY) {
-            setMeasuredDimension(width, height);//扩展为全屏
+            width = widthSpecSize;
+            height = heightSpecSize;
         } else if (widthSpecMode == MeasureSpec.EXACTLY) {
             width = Math.max(widthMeasureSpec, measuredWidth);
             height = measuredHeight;
@@ -56,6 +59,7 @@ public class FullVideoView extends VideoView {
             height = measuredHeight;
         }
 
+        LogUtil.d(width + ", " + height);
         setMeasuredDimension(width, height);
     }
 
