@@ -5,9 +5,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.os.Build;
 import android.util.AttributeSet;
-import android.view.ViewTreeObserver;
+import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
@@ -24,14 +23,11 @@ public class MediaControllerLayout extends FrameLayout {
     private FrameLayout.LayoutParams videoPlayerLayoutParams;
 
     //最小化的宽度和高度
-    private int playerMiniWidth;
-    private int playerMiniHeight;
+    private int playerMiniWidth = 450;
+    private int playerMiniHeight = 300;
     private int playerMaxiHeight;
 
     private boolean isMinimum = false;
-    private boolean isDragging = false;
-    private int topMargin;
-    private int leftMargin;
 
     public MediaControllerLayout(Context context) {
         this(context, null);
@@ -52,27 +48,11 @@ public class MediaControllerLayout extends FrameLayout {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MediaControllerLayout);
         if (typedArray != null) {
-            playerMiniWidth = (int) typedArray.getDimension(R.styleable.MediaControllerLayout_playerMiniWidth, 600);
-            playerMiniHeight = (int) typedArray.getDimension(R.styleable.MediaControllerLayout_playerMiniHeight, 600);
+            playerMiniWidth = (int) typedArray.getDimension(R.styleable.MediaControllerLayout_playerMiniWidth, 450);
+            playerMiniHeight = (int) typedArray.getDimension(R.styleable.MediaControllerLayout_playerMiniHeight, 300);
             playerMaxiHeight = (int) typedArray.getDimension(R.styleable.MediaControllerLayout_playerMaxHeight, 600);
             typedArray.recycle();
         }
-
-        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                } else {
-                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                }
-
-                int measuredWidth = getMeasuredWidth();
-                int measuredHeight = getMeasuredHeight();
-                topMargin = measuredHeight - playerMiniHeight;
-                leftMargin = measuredWidth - playerMiniWidth;
-            }
-        });
     }
 
     @Override
@@ -94,22 +74,26 @@ public class MediaControllerLayout extends FrameLayout {
             if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
                 activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                videoPlayerLayoutParams.gravity = Gravity.START | Gravity.TOP;
                 videoPlayerLayoutParams.topMargin = 0;
-                videoPlayerLayoutParams.leftMargin = 0;
                 videoPlayerLayoutParams.width = -1;
                 videoPlayerLayoutParams.height = -1;
+                videoPlayer.setMini(false);
             } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                 activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 
                 if (isMinimum) {
-                    videoPlayerLayoutParams.topMargin = topMargin;
-                    videoPlayerLayoutParams.leftMargin = leftMargin;
+                    videoPlayerLayoutParams.gravity = Gravity.BOTTOM | Gravity.END;
+                    videoPlayerLayoutParams.topMargin = 0;
                     videoPlayerLayoutParams.width = playerMiniWidth;
                     videoPlayerLayoutParams.height = playerMiniHeight;
+                    videoPlayer.setMini(true);
                 } else {
+                    videoPlayerLayoutParams.gravity = Gravity.START | Gravity.TOP;
                     videoPlayerLayoutParams.width = -1;
                     videoPlayerLayoutParams.height = playerMaxiHeight;
+                    videoPlayer.setMini(false);
                 }
             }
 
@@ -126,6 +110,7 @@ public class MediaControllerLayout extends FrameLayout {
     public void setVideoURI(Uri videoURI) {
         if (videoPlayer != null) {
             videoPlayer.setVideoURI(videoURI);
+            videoPlayer.setMini(false);
         }
     }
 
@@ -145,16 +130,17 @@ public class MediaControllerLayout extends FrameLayout {
 
         isMinimum = false;
 
+        videoPlayerLayoutParams.gravity = Gravity.START | Gravity.TOP;
         videoPlayerLayoutParams.width = -1;
         videoPlayerLayoutParams.height = playerMaxiHeight;
-        videoPlayerLayoutParams.leftMargin = 0;
         videoPlayerLayoutParams.topMargin = topMargin;
 
         videoPlayer.setLayoutParams(videoPlayerLayoutParams);
+        videoPlayer.setMini(false);
     }
 
     public void minimum() {
-        if (isMinimum || isDragging) {
+        if (isMinimum) {
             return;
         }
 
@@ -162,12 +148,12 @@ public class MediaControllerLayout extends FrameLayout {
 
         isMinimum = true;
 
-        videoPlayerLayoutParams.topMargin = topMargin;
-        videoPlayerLayoutParams.leftMargin = leftMargin;
+        videoPlayerLayoutParams.gravity = Gravity.BOTTOM | Gravity.END;
         videoPlayerLayoutParams.width = playerMiniWidth;
         videoPlayerLayoutParams.height = playerMiniHeight;
 
         videoPlayer.setLayoutParams(videoPlayerLayoutParams);
+        videoPlayer.setMini(true);
     }
 
     private void ensureVideoPlayer() {

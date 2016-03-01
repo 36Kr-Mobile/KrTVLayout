@@ -20,7 +20,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //    private VideoPlayer videoPlayer;
     private MediaControllerLayout mediaControllerLayout;
 
     private int layoutPosition = -1;

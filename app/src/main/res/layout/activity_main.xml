@@ -19,8 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         myapp:playerMaxHeight="200dp"
-        myapp:playerMiniWidth="300dp"
-        myapp:playerMiniHeight="150dp">
+        myapp:playerMiniWidth="150dp"
+        myapp:playerMiniHeight="100dp">
 
         <com.baiiu.krtvdemo.view.VideoPlayer
             android:id="@+id/videoPlayer"

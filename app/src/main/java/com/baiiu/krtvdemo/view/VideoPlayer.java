@@ -36,7 +36,7 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
     private static final int sDefaultTimeout = 3000;
 
     private View container_top;
-    private TextView tv_title;
+    //    private TextView tv_title;
     private ImageButton ibt_close;
     private View container_bottom;
     private TextView tv_time_current;
@@ -56,10 +56,12 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
     private boolean isShowing;//悬浮控制层是否在展示
     private boolean mDragging;
     private boolean isReleased = true;
+    private boolean isMini;
 
     private Uri currentUri;
 
     public IViewPlayerCallBack mViewPlayerCallBack;
+    private ImageButton ibt_close_mini;
 
     public interface IViewPlayerCallBack {
         void onClose();
@@ -97,7 +99,7 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
         videoView = (VideoView) findViewById(R.id.videoView);
 
         container_top = findViewById(R.id.container_top);
-        tv_title = (TextView) findViewById(R.id.tv_title);
+//        tv_title = (TextView) findViewById(R.id.tv_title);
         ibt_close = (ImageButton) findViewById(R.id.ibt_close);
 
         container_bottom = findViewById(R.id.container_bottom);
@@ -112,6 +114,8 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
         progressBar_container = findViewById(R.id.progressBar_container);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        ibt_close_mini = (ImageButton) findViewById(R.id.ibt_close_mini);
+
         container_top.setVisibility(INVISIBLE);
         container_bottom.setVisibility(INVISIBLE);
         ibt_pause_play.setVisibility(INVISIBLE);
@@ -119,6 +123,7 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
         ibt_close.setOnClickListener(this);
         ibt_shrink.setOnClickListener(this);
         ibt_pause_play.setOnClickListener(this);
+        ibt_close_mini.setOnClickListener(this);
 
         mProgress.setOnSeekBarChangeListener(this);
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -178,6 +183,7 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ibt_close:
+            case R.id.ibt_close_mini:
                 close();
                 if (mViewPlayerCallBack != null) {
                     mViewPlayerCallBack.onClose();
@@ -281,6 +287,12 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
         if (isReleased) {
             return true;
         }
+
+        if (isMini) {
+            ibt_shrink.performClick();
+            return true;
+        }
+
         //在手指按下时即显示
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -301,7 +313,7 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
                 break;
         }
 
-        return super.onTouchEvent(event);
+        return true;
     }
 
     //展出,展出动画
@@ -316,6 +328,17 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
         ibt_pause_play.setVisibility(VISIBLE);
 
         mHandler.sendEmptyMessage(SHOW_PROGRESS);
+    }
+
+    public void setMini(boolean mini) {
+        this.isMini = mini;
+        if (isMini) {
+            mHandler.removeMessages(FADE_OUT);
+            ibt_close_mini.setVisibility(VISIBLE);
+            dismiss();
+        } else {
+            ibt_close_mini.setVisibility(GONE);
+        }
     }
 
     //消失,消失动画
@@ -354,23 +377,11 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
-//        Context context = getContext();
-//        if (context instanceof Activity) {
-//            Activity activity = (Activity) context;
+//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 //
-//            if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//                activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-//                activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//                ((LayoutParams) getLayoutParams()).topMargin = -1;
-//                getLayoutParams().width = -1;
-//                getLayoutParams().height = -1;
-//            } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-//                activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//                activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-//                getLayoutParams().height = 600;
-//                getLayoutParams().width = -1;
-//            }
+//        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && isMini) {
+//            mHandler.removeMessages(FADE_OUT);
+//            dismiss();
 //        }
     }
 

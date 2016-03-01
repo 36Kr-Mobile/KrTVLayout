@@ -34,6 +34,7 @@
             android:paddingStart="15dp"
             android:textColor="@android:color/white"
             android:textSize="13sp"
+            android:visibility="invisible"
             tools:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈" />
 
         <ImageButton
@@ -128,5 +129,18 @@
         android:background="@color/black_50"
         android:padding="10dp"
         android:src="@drawable/level_pause_play" />
+
+    <ImageButton
+        android:id="@+id/ibt_close_mini"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:background="@color/black_50"
+        android:gravity="center"
+        android:padding="5dp"
+        android:paddingBottom="30dp"
+        android:src="@drawable/news_krtv_close"
+        android:visibility="gone" />
+
 
 </merge>
