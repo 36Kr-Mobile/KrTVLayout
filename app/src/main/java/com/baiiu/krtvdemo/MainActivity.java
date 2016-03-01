@@ -117,6 +117,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mediaControllerLayout.setVisibility(View.VISIBLE);
 
         mediaControllerLayout.setVideoURI(Uri.parse(holder.videoSource));
+//        Uri parse = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.krtv);
+//        mediaControllerLayout.setVideoURI(parse);
+//        LogUtil.d(parse.toString());
+
+
     }
 
 
@@ -124,8 +129,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View viewByPosition = linearLayoutManager.findViewByPosition(layoutPosition);
         if (viewByPosition != null) {
             int top = viewByPosition.getTop();
-            return top > 0 ? top : 0;
-//            return top;
+//            return top > 0 ? top : 0;
+            return top;
         } else {
             throw new NullPointerException();
         }

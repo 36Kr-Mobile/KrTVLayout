@@ -20,8 +20,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".YoutubeActivity" />
-
     </application>
 
 </manifest>
