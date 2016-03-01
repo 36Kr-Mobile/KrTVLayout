@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.baiiu.krtvdemo.pojo.TV;
+import com.baiiu.krtvdemo.pojo.KrTVData;
 
 import java.util.List;
 
@@ -17,10 +17,10 @@ import java.util.List;
  */
 public class KrTVAdapter extends RecyclerView.Adapter<KrTVViewHolder> {
     private Context context;
-    private List<TV> list;
+    private List<KrTVData> list;
     private View.OnClickListener onClickListener;
 
-    public KrTVAdapter(Context context, List<TV> list, View.OnClickListener onClickListener) {
+    public KrTVAdapter(Context context, List<KrTVData> list, View.OnClickListener onClickListener) {
         this.context = context;
         this.list = list;
         this.onClickListener = onClickListener;
@@ -36,7 +36,7 @@ public class KrTVAdapter extends RecyclerView.Adapter<KrTVViewHolder> {
         if (list == null || list.get(position) == null) {
             return;
         }
-        holder.bindData(list.get(position).tv);
+        holder.bindData(list.get(position));
     }
 
     @Override

@@ -22,7 +22,7 @@ public class GsonUtil {
         try {
             t = gson.fromJson(json, clazz);
         } catch (Exception e) {
-            LogUtil.e(e.toString());
+            e.printStackTrace();
         }
 
         return t;
@@ -34,7 +34,7 @@ public class GsonUtil {
         try {
             t = gson.fromJson(json, typeOfT);
         } catch (Exception e) {
-            LogUtil.e(e.toString());
+            e.printStackTrace();
         }
 
         return t;

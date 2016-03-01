@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.baiiu.krtvdemo.pojo.TVData;
+import com.baiiu.krtvdemo.pojo.KrTVData;
 import com.bumptech.glide.Glide;
 
 /**
@@ -36,7 +36,7 @@ public class KrTVViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public void bindData(TVData tv) {
+    public void bindData(KrTVData tv) {
         itemView.setTag(this);
 
         videoSource = tv.videoSource;

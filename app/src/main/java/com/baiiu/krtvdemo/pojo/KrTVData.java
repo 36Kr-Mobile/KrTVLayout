@@ -9,9 +9,6 @@ public class KrTVData {
     public String title;
     public String duration;
     public String videoSource;
-    public long publishTime;
     public String youkuUrl;
     public String featureImg;
-    public String durationLong;
-
 }

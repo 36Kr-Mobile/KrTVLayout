@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.baiiu.krtvdemo.pojo.KrTV;
-import com.baiiu.krtvdemo.pojo.TV;
+import com.baiiu.krtvdemo.pojo.KrTVData;
 import com.baiiu.krtvdemo.util.AssetsUtil;
 import com.baiiu.krtvdemo.util.GsonUtil;
 import com.baiiu.krtvdemo.view.MediaControllerLayout;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String s = AssetsUtil.readAssets(this, "example.json");
 
         KrTV krTV = GsonUtil.parseJson(s, KrTV.class);
-        List<TV> list = krTV.data.data;
+        List<KrTVData> list = krTV.data;
         KrTVAdapter krTVAdapter = new KrTVAdapter(this, list, this);
         recyclerView.setAdapter(krTVAdapter);
 
@@ -117,11 +117,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mediaControllerLayout.setVisibility(View.VISIBLE);
 
         mediaControllerLayout.setVideoURI(Uri.parse(holder.videoSource));
-//        Uri parse = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.krtv);
-//        mediaControllerLayout.setVideoURI(parse);
-//        LogUtil.d(parse.toString());
-
-
     }
 
 
