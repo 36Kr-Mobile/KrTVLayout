@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.VideoView;
 
-import com.baiiu.krtvdemo.util.LogUtil;
-
 /**
  * author: baiiu
  * date: on 16/2/25 15:52
@@ -59,7 +57,6 @@ public class FullVideoView extends VideoView {
             height = measuredHeight;
         }
 
-        LogUtil.d(width + ", " + height);
         setMeasuredDimension(width, height);
     }
 
