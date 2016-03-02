@@ -37,10 +37,7 @@ public class KrTVViewHolder extends RecyclerView.ViewHolder {
 
 
     public void bindData(KrTVData tv) {
-        itemView.setTag(this);
-
         videoSource = tv.videoSource;
-
         Glide.with(imageView.getContext()).load(tv.featureImg).centerCrop().into(imageView);
         tv_title.setText(tv.title);
         tv_duration.setText(tv.duration);

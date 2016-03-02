@@ -129,6 +129,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             throw new NullPointerException();
         }
-
     }
 }
