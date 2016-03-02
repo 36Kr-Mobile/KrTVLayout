@@ -110,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         KrTVViewHolder holder = (KrTVViewHolder) v.getTag();
+        if (holder == null) {
+            return;
+        }
 
         layoutPosition = holder.getLayoutPosition();
 

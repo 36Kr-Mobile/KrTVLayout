@@ -55,7 +55,7 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
     private boolean isShowing;//悬浮控制层是否在展示
     private boolean mDragging;
     private boolean isReleased = true;
-    private boolean isMini;
+    private boolean isMini = false;
 
     private Uri currentUri;
 
@@ -328,6 +328,10 @@ public class VideoPlayer extends FrameLayout implements View.OnClickListener, Se
     }
 
     public void setMini(boolean mini) {
+        if (this.isMini == mini) {
+            return;
+        }
+
         this.isMini = mini;
         if (isMini) {
             mHandler.removeMessages(FADE_OUT);
