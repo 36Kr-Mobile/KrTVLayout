@@ -71,7 +71,7 @@ public class MediaControllerLayout extends FrameLayout {
         if (context instanceof Activity) {
             Activity activity = (Activity) context;
 
-            if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
                 activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 videoPlayerLayoutParams.gravity = Gravity.START | Gravity.TOP;
@@ -79,7 +79,7 @@ public class MediaControllerLayout extends FrameLayout {
                 videoPlayerLayoutParams.width = -1;
                 videoPlayerLayoutParams.height = -1;
                 videoPlayer.setMini(false);
-            } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 
