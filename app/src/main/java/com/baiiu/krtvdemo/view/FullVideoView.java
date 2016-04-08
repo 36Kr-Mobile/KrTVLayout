@@ -27,7 +27,7 @@ public class FullVideoView extends VideoView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         /*
-        这段代码为经测试,不能确保使该videoView按最大的尺寸播放.尽量全部写为MeasureSpec.EXACTLY的
+        这段代码未经测试,不能确保使该videoView按最大的尺寸播放.尽量全部写为MeasureSpec.EXACTLY的
          */
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
