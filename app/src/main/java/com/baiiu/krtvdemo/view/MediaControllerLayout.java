@@ -19,151 +19,154 @@ import com.baiiu.krtvdemo.R;
  */
 public class MediaControllerLayout extends FrameLayout {
 
-    private VideoPlayer videoPlayer;
-    private FrameLayout.LayoutParams videoPlayerLayoutParams;
+  private VideoPlayer videoPlayer;
+  private FrameLayout.LayoutParams videoPlayerLayoutParams;
 
-    //最小化的宽度和高度
-    private int playerMiniWidth = 450;
-    private int playerMiniHeight = 300;
-    private int playerMaxiHeight;
+  //最小化的宽度和高度
+  private int playerMiniWidth = 450;
+  private int playerMiniHeight = 300;
+  private int playerMaxiHeight;
 
-    private boolean isMinimum = false;
+  private boolean isMinimum = false;
 
-    public MediaControllerLayout(Context context) {
-        this(context, null);
+  public MediaControllerLayout(Context context) {
+    this(context, null);
+  }
+
+  public MediaControllerLayout(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    init(context, attrs);
+  }
+
+  public MediaControllerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init(context, attrs);
+  }
+
+  private void init(Context context, AttributeSet attrs) {
+
+    TypedArray typedArray =
+        context.obtainStyledAttributes(attrs, R.styleable.MediaControllerLayout);
+    if (typedArray != null) {
+      playerMiniWidth =
+          typedArray.getDimensionPixelSize(R.styleable.MediaControllerLayout_playerMiniWidth, 450);
+      playerMiniHeight =
+          typedArray.getDimensionPixelSize(R.styleable.MediaControllerLayout_playerMiniHeight, 300);
+      playerMaxiHeight =
+          typedArray.getDimensionPixelSize(R.styleable.MediaControllerLayout_playerMaxHeight, 600);
+      typedArray.recycle();
     }
+  }
 
-    public MediaControllerLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
-    }
+  @Override protected void onFinishInflate() {
+    super.onFinishInflate();
+    videoPlayer = (VideoPlayer) findViewById(R.id.videoPlayer);
+    videoPlayerLayoutParams = (FrameLayout.LayoutParams) videoPlayer.getLayoutParams();
+  }
 
-    public MediaControllerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context, attrs);
-    }
+  @Override public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
 
+    //也可以在这里调整
+    Context context = getContext();
+    if (context instanceof Activity) {
+      Activity activity = (Activity) context;
 
-    private void init(Context context, AttributeSet attrs) {
-
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MediaControllerLayout);
-        if (typedArray != null) {
-            playerMiniWidth = (int) typedArray.getDimension(R.styleable.MediaControllerLayout_playerMiniWidth, 450);
-            playerMiniHeight = (int) typedArray.getDimension(R.styleable.MediaControllerLayout_playerMiniHeight, 300);
-            playerMaxiHeight = (int) typedArray.getDimension(R.styleable.MediaControllerLayout_playerMaxHeight, 600);
-            typedArray.recycle();
-        }
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        videoPlayer = (VideoPlayer) findViewById(R.id.videoPlayer);
-        videoPlayerLayoutParams = (FrameLayout.LayoutParams) videoPlayer.getLayoutParams();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        //也可以在这里调整
-        Context context = getContext();
-        if (context instanceof Activity) {
-            Activity activity = (Activity) context;
-
-            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-                activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                videoPlayerLayoutParams.gravity = Gravity.START | Gravity.TOP;
-                videoPlayerLayoutParams.topMargin = 0;
-                videoPlayerLayoutParams.width = -1;
-                videoPlayerLayoutParams.height = -1;
-                videoPlayer.setMini(false);
-            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-
-                if (isMinimum) {
-                    videoPlayerLayoutParams.gravity = Gravity.BOTTOM | Gravity.END;
-                    videoPlayerLayoutParams.topMargin = 0;
-                    videoPlayerLayoutParams.width = playerMiniWidth;
-                    videoPlayerLayoutParams.height = playerMiniHeight;
-                    videoPlayer.setMini(true);
-                } else {
-                    videoPlayerLayoutParams.gravity = Gravity.START | Gravity.TOP;
-                    videoPlayerLayoutParams.width = -1;
-                    videoPlayerLayoutParams.height = playerMaxiHeight;
-                    videoPlayer.setMini(false);
-                }
-            }
-
-            videoPlayer.setLayoutParams(videoPlayerLayoutParams);
-        }
-    }
-
-    public void close() {
-        if (videoPlayer != null) {
-            videoPlayer.close();
-        }
-    }
-
-    public void setVideoURI(Uri videoURI) {
-        if (videoPlayer != null) {
-            videoPlayer.setVideoURI(videoURI);
-            videoPlayer.setMini(false);
-        }
-    }
-
-    public void setViewPlayerCallBack(VideoPlayer.IViewPlayerCallBack viewPlayerCallBack) {
-        if (videoPlayer != null) {
-            videoPlayer.setViewPlayerCallBack(viewPlayerCallBack);
-        }
-
-    }
-
-    public void maximum(int topMargin) {
-        if (topMargin == 0 && videoPlayerLayoutParams.topMargin == 0) {
-            return;
-        }
-
-        ensureVideoPlayer();
-
-        isMinimum = false;
-
+      if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        activity.getWindow()
+            .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         videoPlayerLayoutParams.gravity = Gravity.START | Gravity.TOP;
+        videoPlayerLayoutParams.topMargin = 0;
         videoPlayerLayoutParams.width = -1;
-        videoPlayerLayoutParams.height = playerMaxiHeight;
-        videoPlayerLayoutParams.topMargin = topMargin;
-
-        videoPlayer.setLayoutParams(videoPlayerLayoutParams);
+        videoPlayerLayoutParams.height = -1;
         videoPlayer.setMini(false);
-    }
+      } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        activity.getWindow()
+            .setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 
-    public void minimum() {
         if (isMinimum) {
-            return;
+          videoPlayerLayoutParams.gravity = Gravity.BOTTOM | Gravity.END;
+          videoPlayerLayoutParams.topMargin = 0;
+          videoPlayerLayoutParams.width = playerMiniWidth;
+          videoPlayerLayoutParams.height = playerMiniHeight;
+          videoPlayer.setMini(true);
+        } else {
+          videoPlayerLayoutParams.gravity = Gravity.START | Gravity.TOP;
+          videoPlayerLayoutParams.width = -1;
+          videoPlayerLayoutParams.height = playerMaxiHeight;
+          videoPlayer.setMini(false);
         }
+      }
 
-        ensureVideoPlayer();
+      videoPlayer.setLayoutParams(videoPlayerLayoutParams);
+    }
+  }
 
-        isMinimum = true;
+  public void close() {
+    if (videoPlayer != null) {
+      videoPlayer.close();
+    }
+  }
 
-        videoPlayerLayoutParams.gravity = Gravity.BOTTOM | Gravity.END;
-        videoPlayerLayoutParams.width = playerMiniWidth;
-        videoPlayerLayoutParams.height = playerMiniHeight;
+  public void setVideoURI(Uri videoURI) {
+    if (videoPlayer != null) {
+      videoPlayer.setVideoURI(videoURI);
+      videoPlayer.setMini(false);
+    }
+  }
 
-        videoPlayer.setLayoutParams(videoPlayerLayoutParams);
-        videoPlayer.setMini(true);
+  public void setViewPlayerCallBack(VideoPlayer.IViewPlayerCallBack viewPlayerCallBack) {
+    if (videoPlayer != null) {
+      videoPlayer.setViewPlayerCallBack(viewPlayerCallBack);
+    }
+  }
+
+  public void maximum(int topMargin) {
+    if (topMargin == 0 && videoPlayerLayoutParams.topMargin == 0) {
+      return;
     }
 
-    private void ensureVideoPlayer() {
-        if (videoPlayer == null) {
-            throw new IllegalStateException("videoPlayer不能为空");
-        }
+    ensureVideoPlayer();
 
-        if (videoPlayerLayoutParams == null) {
-            videoPlayerLayoutParams = new FrameLayout.LayoutParams(-1, playerMaxiHeight);
-        }
+    isMinimum = false;
+
+    videoPlayerLayoutParams.gravity = Gravity.START | Gravity.TOP;
+    videoPlayerLayoutParams.width = -1;
+    videoPlayerLayoutParams.height = playerMaxiHeight;
+    videoPlayerLayoutParams.topMargin = topMargin;
+
+    videoPlayer.setLayoutParams(videoPlayerLayoutParams);
+    videoPlayer.setMini(false);
+  }
+
+  public void minimum() {
+    if (isMinimum) {
+      return;
     }
 
+    ensureVideoPlayer();
+
+    isMinimum = true;
+
+    videoPlayerLayoutParams.gravity = Gravity.BOTTOM | Gravity.END;
+    videoPlayerLayoutParams.width = playerMiniWidth;
+    videoPlayerLayoutParams.height = playerMiniHeight;
+
+    videoPlayer.setLayoutParams(videoPlayerLayoutParams);
+    videoPlayer.setMini(true);
+  }
+
+  private void ensureVideoPlayer() {
+    if (videoPlayer == null) {
+      throw new IllegalStateException("videoPlayer不能为空");
+    }
+
+    if (videoPlayerLayoutParams == null) {
+      videoPlayerLayoutParams = new FrameLayout.LayoutParams(-1, playerMaxiHeight);
+    }
+  }
 }
